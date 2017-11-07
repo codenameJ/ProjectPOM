@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace POM
 {
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -14,7 +15,6 @@ namespace POM
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
         Texture2D StartMoon; //StartBot;
 
         private Color _backgroundColour = Color.CornflowerBlue;
@@ -24,18 +24,17 @@ namespace POM
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1440;
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        
         protected override void Initialize()
         {
+ 
             // TODO: Add your initialization logic here
 
             base.Initialize();
@@ -52,15 +51,15 @@ namespace POM
 
             var randomButton = new Button(Content.Load<Texture2D>("Controls/startgame"))
             {
-                Position = new Vector2(270,270),
-                TextureSize = new Vector2(200,100)
+                Position = new Vector2(500,520),
+                TextureSize = new Vector2(350,180)
             };
             randomButton.Click += RandomButton_Click;
 
             var quitebot = new Button(Content.Load<Texture2D>("Controls/howtoplay"))
             {
-                Position = new Vector2(250, 350),
-                TextureSize = new Vector2(250,130)
+                Position = new Vector2(480, 650),
+                TextureSize = new Vector2(400,180)
             };
  
 
@@ -135,7 +134,7 @@ namespace POM
             foreach (var component in _gameComponent)
             component.Draw(gameTime, spriteBatch);
 
-            spriteBatch.Draw(StartMoon, new Rectangle(230,20,300,270), Color.White);
+            spriteBatch.Draw(StartMoon, new Rectangle(380,10,620,570), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
