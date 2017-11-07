@@ -14,7 +14,7 @@ namespace POM
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Vector2 position;
+
         Texture2D StartMoon; //StartBot;
 
         private Color _backgroundColour = Color.CornflowerBlue;
@@ -52,20 +52,29 @@ namespace POM
 
             var randomButton = new Button(Content.Load<Texture2D>("Controls/startgame"))
             {
-                Position = new Vector2(100, 100),
-
+                Position = new Vector2(270,270),
+                TextureSize = new Vector2(200,100)
             };
-
-
             randomButton.Click += RandomButton_Click;
+
+            var quitebot = new Button(Content.Load<Texture2D>("Controls/howtoplay"))
+            {
+                Position = new Vector2(250, 350),
+                TextureSize = new Vector2(250,130)
+            };
+ 
+
+            quitebot.Click += Quite_Click;
 
 
             _gameComponent = new List<Component>()
             {
                 randomButton,
+                quitebot,
             };
+
             // TODO: use this.Content to load your game content here
-  
+
 
 
             StartMoon = Content.Load<Texture2D>("MainMoon");
@@ -77,6 +86,11 @@ namespace POM
             var random = new Random();
             _backgroundColour = new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
 
+        }
+
+        private void Quite_Click(object sender, System.EventArgs e)
+        {
+            Exit();
         }
 
         /// <summary>
@@ -99,7 +113,7 @@ namespace POM
                 Exit();
 
             foreach (var component in _gameComponent)
-                component.Update(gameTime);
+                component.Update(gameTime); 
             // TODO: Add your update logic here
 
 
@@ -117,10 +131,12 @@ namespace POM
             // TODO: Add your drawing code here
 
             spriteBatch.Begin();
+
             foreach (var component in _gameComponent)
             component.Draw(gameTime, spriteBatch);
-            spriteBatch.Draw(StartMoon, new Rectangle(225,50,327,290), Color.White);
- //           spriteBatch.Draw(StartBot, new Rectangle(260,330, 250,100), Color.White);
+
+            spriteBatch.Draw(StartMoon, new Rectangle(230,20,300,270), Color.White);
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
