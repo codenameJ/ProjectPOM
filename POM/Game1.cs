@@ -49,20 +49,25 @@ namespace POM
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            var HowToPlayBut = new Button(Content.Load<Texture2D>("Controls/howtoplay"))
+            {
+                Position = new Vector2(490, 610),
+                TextureSize = new Vector2(400, 180)
+            };
+
             var randomButton = new Button(Content.Load<Texture2D>("Controls/startgame"))
             {
-                Position = new Vector2(500,520),
-                TextureSize = new Vector2(350,180)
+                Position = new Vector2(530,510),
+                TextureSize = new Vector2(320,150)
             };
             randomButton.Click += RandomButton_Click;
 
-            var quitebot = new Button(Content.Load<Texture2D>("Controls/howtoplay"))
+            var quitebot = new Button(Content.Load<Texture2D>("Controls/exitbutt"))
             {
-                Position = new Vector2(480, 650),
-                TextureSize = new Vector2(400,180)
+                Position = new Vector2(535, 730),
+                TextureSize = new Vector2(300,120)
             };
  
-
             quitebot.Click += Quite_Click;
 
 
@@ -70,6 +75,7 @@ namespace POM
             {
                 randomButton,
                 quitebot,
+                HowToPlayBut,
             };
 
             // TODO: use this.Content to load your game content here
@@ -134,7 +140,7 @@ namespace POM
             foreach (var component in _gameComponent)
             component.Draw(gameTime, spriteBatch);
 
-            spriteBatch.Draw(StartMoon, new Rectangle(380,10,620,570), Color.White);
+            spriteBatch.Draw(StartMoon, new Rectangle(400,10,600,550), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
