@@ -4,21 +4,27 @@ using Microsoft.Xna.Framework.Input;
 using POM.Content.Controls;
 using System;
 using System.Collections.Generic;
+using POM.States;
 
 namespace POM
 {
-
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D StartMoon; //StartBot;
+        SpriteBatch spriteBatch; 
 
         private Color _backgroundColour = Color.CornflowerBlue;
-        private List<Component> _gameComponent;
+        private List<Component> _MainMenuComponent;
+
+
+        private State _currentState;
+
+        private State _nextState;
+
+        public void ChangeState(State state)
+        {
+            _nextState = state;
+        }
 
 
         public Game1()
@@ -35,76 +41,28 @@ namespace POM
         protected override void Initialize()
         {
  
-            // TODO: Add your initialization logic here
+            
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+
         protected override void LoadContent()
         {
+            _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var HowToPlayBut = new Button(Content.Load<Texture2D>("Controls/howtoplay"))
-            {
-                Position = new Vector2(490, 610),
-                TextureSize = new Vector2(400, 180)
-            };
 
-            var randomButton = new Button(Content.Load<Texture2D>("Controls/startgame"))
-            {
-                Position = new Vector2(530,510),
-                TextureSize = new Vector2(320,150)
-            };
-            randomButton.Click += RandomButton_Click;
-
-            var quitebot = new Button(Content.Load<Texture2D>("Controls/exitbutt"))
-            {
-                Position = new Vector2(535, 730),
-                TextureSize = new Vector2(300,120)
-            };
- 
-            quitebot.Click += Quite_Click;
-
-
-            _gameComponent = new List<Component>()
-            {
-                randomButton,
-                quitebot,
-                HowToPlayBut,
-            };
-
-            // TODO: use this.Content to load your game content here
-
-
-
-            StartMoon = Content.Load<Texture2D>("MainMoon");
- //           StartBot = Content.Load<Texture2D>("startgame");
-        }
-
-        private void RandomButton_Click(object sender, System.EventArgs e)
-        {
-            var random = new Random();
-            _backgroundColour = new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
 
         }
 
-        private void Quite_Click(object sender, System.EventArgs e)
-        {
-            Exit();
-        }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -114,13 +72,13 @@ namespace POM
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            foreach (var component in _gameComponent)
-                component.Update(gameTime); 
-            // TODO: Add your update logic here
-
+            if(_nextState != null)
+            {
+                _currentState = _nextState;
+                _nextState = null;
+            }
+            _currentState.Update(gameTime);
+            _currentState.PostUpdate(gameTime);
 
             base.Update(gameTime);
         }
@@ -131,16 +89,11 @@ namespace POM
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(_backgroundColour);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
 
-            spriteBatch.Begin();
+            _currentState.Draw(gameTime, spriteBatch);
 
-            foreach (var component in _gameComponent)
-            component.Draw(gameTime, spriteBatch);
-
-            spriteBatch.Draw(StartMoon, new Rectangle(400,10,600,550), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);

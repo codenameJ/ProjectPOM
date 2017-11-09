@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using POM.Content.Controls;
 
 namespace POM.Content.Controls
 {
@@ -33,7 +32,7 @@ namespace POM.Content.Controls
         {
             get
             {
-                return new Rectangle((int)Position.X,(int)Position.Y, (int)TextureSize.X, (int)TextureSize.Y);
+                return new Rectangle((int)Position.X, (int)Position.Y, (int)TextureSize.X, (int)TextureSize.Y);
             }
         }
 
@@ -56,11 +55,11 @@ namespace POM.Content.Controls
             }
 
 
-                spriteBatch.Draw(_texture, Rect, color);
-           
+            spriteBatch.Draw(_texture, Rect, color);
+
 
         }
-   
+
 
         public override void Update(GameTime gameTime)
         {
@@ -70,18 +69,18 @@ namespace POM.Content.Controls
             var mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
             _isMovering = false;
 
-            if(mouseRectangle.Intersects(Rect))
+            if (mouseRectangle.Intersects(Rect))
             {
                 _isMovering = true;
-                if(_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton==ButtonState.Pressed)
+                if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
                 {
                     Click?.Invoke(this, new EventArgs());
-        
+
                 }
             }
-     
+
         }
 
-#endregion
+        #endregion
     }
 }
