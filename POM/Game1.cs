@@ -11,16 +11,14 @@ namespace POM
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch; 
+        SpriteBatch spriteBatch;
+
 
         private Color _backgroundColour = Color.CornflowerBlue;
-        private List<Component> _MainMenuComponent;
 
 
         private State _currentState;
-
         private State _nextState;
-
         public void ChangeState(State state)
         {
             _nextState = state;

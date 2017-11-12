@@ -11,6 +11,7 @@ namespace POM.States
 {
     public abstract class State
     {
+
         #region fields
         protected ContentManager _content;
         protected GraphicsDevice _gtaphicsDevice;

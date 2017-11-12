@@ -12,7 +12,7 @@ namespace POM.States
 {
     public class MenuState : State
     {
-        private List<Component> _components;
+        private List<Component> _MenuComponents;
         Texture2D MainMoon;
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
@@ -42,7 +42,7 @@ namespace POM.States
             };
             exitbutt.Click += Quite_Click;
 
-            _components = new List<Component>()
+            _MenuComponents = new List<Component>()
             {
                 startgamebutt,
                 howtoplaybutt,
@@ -67,7 +67,7 @@ namespace POM.States
 
             spriteBatch.Draw(MainMoon, new Rectangle(420, 10, 550, 500), Color.White);
 
-            foreach (var component in _components)
+            foreach (var component in _MenuComponents)
                 component.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
@@ -80,7 +80,7 @@ namespace POM.States
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var component in _components)
+            foreach (var component in _MenuComponents)
                 component.Update(gameTime);
                 
         }
