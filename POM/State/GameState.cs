@@ -79,7 +79,7 @@ namespace POM.States
             spriteBatch.Draw(bgtest, new Rectangle(0, 0, 1440, 900), Color.White);
 
             
-            spriteBatch.Draw(gamemoon, new Rectangle(420, 300, 550, 500), Color.White);
+            spriteBatch.Draw(gamemoon, new Rectangle(600, 400, 225, 200), Color.White);
             spriteBatch.Draw(prince, new Rectangle((int)princePosition.X, (int)princePosition.Y, 160, 156), Color.White);
 
 

@@ -34,7 +34,7 @@ namespace POM.States
             bgtest = _content.Load<Texture2D>("BG/Layer 1");
 
             var startgametexture = _content.Load<Texture2D>("Controls/startgame");
-            var howtoplaytexture = _content.Load<Texture2D>("Controls/howtoplay");
+            var howtoplaytexture = _content.Load<Texture2D>("howtoplay");
             var exittexture = _content.Load<Texture2D>("Controls/exitbutt");
             MainMoon = _content.Load <Texture2D>("MainMoon");
 
@@ -45,18 +45,21 @@ namespace POM.States
             };
             startgamebutt.Click += Startgame_Click;
 
-            var howtoplaybutt = new Button(howtoplaytexture)
-            {
-                Position = new Vector2(530, 680),
-                TextureSize = new Vector2(300, 60)
-            };
-
             var exitbutt = new Button(exittexture)
             {
                 Position = new Vector2(600, 805),
                 TextureSize = new Vector2(150, 60)
             };
             exitbutt.Click += Quite_Click;
+
+            //add by jarikka-----------------------------------------
+            var howtoplaybutt = new Button(howtoplaytexture)
+            {
+                Position = new Vector2(530, 680),
+                TextureSize = new Vector2(300, 60)
+            };
+            howtoplaybutt.Click += HowtoPlay_Click;
+            //--------------------------------------------------------
 
             _MenuComponents = new List<Component>()
             {
@@ -76,6 +79,13 @@ namespace POM.States
         {
             _game.Exit();
         }
+
+        //how to play click funtion
+        private void HowtoPlay_Click(object sender, System.EventArgs e)
+        {
+            _game.ChangeState(new HowtoState(_game, _gtaphicsDevice, _content));
+        }
+
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

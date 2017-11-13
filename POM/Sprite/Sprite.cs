@@ -52,8 +52,11 @@ namespace POM.Content.Controls
             MovPY++;
 
 
-
-            spriteBatch.Draw(_texture, new Vector2(MovPX, MovPY), new Rectangle((int)Position.X,(int)Position.Y, (int)TextureSize.X, (int)TextureSize.Y), Color.White);
+            spriteBatch.Draw(_texture, new Vector2(MovPX, MovPY), 
+                new Rectangle((int)Position.X,(int)Position.Y, 
+                (int)TextureSize.X, 
+                (int)TextureSize.Y), Color.White
+                );
         }
 
         public override void Update(GameTime gameTime)
