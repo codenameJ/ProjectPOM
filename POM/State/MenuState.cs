@@ -21,6 +21,7 @@ namespace POM.States
         private Texture2D bgtest;
 
         private List<Component> _MenuComponents;
+
         Texture2D MainMoon;
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)

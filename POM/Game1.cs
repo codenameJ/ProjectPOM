@@ -22,6 +22,10 @@ namespace POM
         public void ChangeState(State state)
         {
             _nextState = state;
+            if (_nextState == state)
+            {
+                IsMouseVisible = false;
+            }
         }
 
 

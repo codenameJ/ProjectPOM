@@ -15,12 +15,7 @@ namespace POM.Content.Controls
         private Texture2D _texture;
         public Vector2 Position { get; set; }
         public Vector2 TextureSize { get; set; }
-        public Point monsterFrameSize { get; set; }
-        public Point monsterSheetSize { get; set; }
-        public Point monsterCurrentFrame { get; set; }
-        public int timeSinceLastFrame { get; set; }
-        public int millisecondPerFrame { get; set; }
-        private Point MCF;
+
 
         #region monstermove
 
@@ -32,16 +27,15 @@ namespace POM.Content.Controls
         //       int millisecondPerFrame = 200;
 
         #endregion
-
+        int MovPX = 0;
+        int MovPY = 0;
 
 
         public Rectangle SpriteRect
         {
             get
             {
-                MCF = monsterCurrentFrame;
-
-                return new Rectangle((int)MCF.X*monsterFrameSize.X, (int)MCF.Y*monsterFrameSize.Y, (int)monsterFrameSize.X, (int)monsterFrameSize.Y);
+                return new Rectangle((int)Position.X, (int)Position.Y, (int)TextureSize.X, (int)TextureSize.Y);
             }
         }
 
@@ -52,38 +46,18 @@ namespace POM.Content.Controls
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            MCF = monsterCurrentFrame;
-            int MovX = MCF.X * monsterFrameSize.X;
-            ++MovX;
-            int MovY = MCF.Y * monsterFrameSize.Y;
-            ++MovY;
 
- //           spriteBatch.Draw(_texture, SpriteRect, color);
-            spriteBatch.Draw(_texture, new Vector2(MovX,MovY), SpriteRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+
+            MovPX++;
+            MovPY++;
+
+
+
+            spriteBatch.Draw(_texture, new Vector2(MovPX, MovPY), new Rectangle((int)Position.X,(int)Position.Y, (int)TextureSize.X, (int)TextureSize.Y), Color.White);
         }
 
         public override void Update(GameTime gameTime)
         {
-
-
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-
-            if (timeSinceLastFrame > millisecondPerFrame)
-            {
-                timeSinceLastFrame -= millisecondPerFrame;
-                ++MCF.X;
-
-                if (MCF.X >= monsterSheetSize.X)
-                {
-                    MCF.X = 0;
-                    ++MCF.Y;
-
-                    if (MCF.Y >= monsterSheetSize.Y)
-                    {
-                        MCF.Y = 0;
-                    }
-                }
-            }
 
 
         }
