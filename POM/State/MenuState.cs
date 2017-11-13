@@ -7,16 +7,31 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using POM.Content.Controls;
+//addd
+using Microsoft.Xna.Framework.Media;
 
 namespace POM.States
 {
     public class MenuState : State
     {
+        //add music
+        private Song backgroundMusic;
+
+        //bg test
+        private Texture2D bgtest;
+
         private List<Component> _MenuComponents;
         Texture2D MainMoon;
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            //add music
+            backgroundMusic = _content.Load<Song>("ost/Earth Cry");
+            MediaPlayer.Play(backgroundMusic);
+
+            //bgtest
+            bgtest = _content.Load<Texture2D>("BG/Layer 1");
+
             var startgametexture = _content.Load<Texture2D>("Controls/startgame");
             var howtoplaytexture = _content.Load<Texture2D>("Controls/howtoplay");
             var exittexture = _content.Load<Texture2D>("Controls/exitbutt");
@@ -64,6 +79,9 @@ namespace POM.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
+            //bgtest
+            spriteBatch.Draw(bgtest, new Rectangle(0, 0, 1440, 900), Color.White);
 
             spriteBatch.Draw(MainMoon, new Rectangle(420, 10, 550, 500), Color.White);
 
