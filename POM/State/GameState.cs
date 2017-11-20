@@ -44,7 +44,7 @@ namespace POM.States
 
 
 
-            var LitMontexture = _content.Load<Texture2D>("Monster/m_litmon");
+            var LitMontexture = _content.Load<Texture2D>("Monster/LitMon");
 
             gamemoon = _content.Load<Texture2D>("MainMoon");
             prince = _content.Load<Texture2D>("Players/o_prince2crop");
@@ -52,9 +52,9 @@ namespace POM.States
             var LitMon = new Sprite(LitMontexture)
             {
                 Position = new Vector2(0,0),
-                TextureSize = new Vector2(261,254),
- //               monsterSheetSize = new Point(3, 0),
-  //              monsterFrameSize = new Point(261, 254),
+ //               TextureSize = new Vector2(261,254),
+                monsterSheetSize = new Point(3, 0),
+                monsterFramesize = new Point(261, 254),
   //              monsterCurrentFrame = new Point(0,0),
  //               timeSinceLastFrame = 0,
   //              millisecondPerFrame = 200
