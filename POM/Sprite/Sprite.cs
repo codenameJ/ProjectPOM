@@ -26,7 +26,7 @@ namespace POM.Content.Controls
 
         public Vector2 Direction = new Vector2(720, 450);
         public float Speed = 0.01f;
-        public Vector2 CurrentPosition = new Vector2(0, 0);
+        public Vector2 CurrentPosition = new Vector2(0,0);
         float Timming = 1f;
 
 
