@@ -40,6 +40,22 @@ namespace POM.States
         //----------------------------------------------------
 
 
+        //tree animation part---------------------------------
+        Texture2D tree;
+
+        Point treeFrameSize = new Point(155, 300);
+        Point treeSheetSize = new Point(7, 4);
+        
+        Point treeCurrentFrame = new Point(0, 0);
+
+        int treetimeSinceLastFrame = 0;
+        int treemillisecondPerFrame = 2000;
+
+        //------------------------------------------------------
+
+
+
+
 
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
@@ -50,6 +66,9 @@ namespace POM.States
 
             //add BG
             BG = _content.Load<Texture2D>("BG/bgnew");
+
+            //add tree
+            tree = _content.Load<Texture2D>("BG/treemars155x300");
 
             gamemoon = _content.Load<Texture2D>("MainMoon");
             prince = _content.Load<Texture2D>("Players/o_prince2crop");
@@ -103,7 +122,16 @@ namespace POM.States
                 FrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             //--------------------------------------------------------------------------
 
-            spriteBatch.Draw(gamemoon, new Rectangle(600, 400, 225, 200), Color.White);
+
+            //tree animation part------------------------------------------------------
+            spriteBatch.Draw(tree, new Vector2(620,350), new Rectangle(
+                (treeCurrentFrame.X * treeFrameSize.X),
+                (treeCurrentFrame.Y * treeFrameSize.Y),
+                treeFrameSize.X,
+                treeFrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            //--------------------------------------------------------------------------
+
+
             spriteBatch.Draw(prince, new Rectangle((int)princePosition.X, (int)princePosition.Y, 160, 156), Color.White);
 
 
@@ -147,7 +175,31 @@ namespace POM.States
                     }
                 }
             }
-            //end--------------------------------------------------------------------------
+            //end BG--------------------------------------------------------------------------
+
+
+
+            //tree animation part Logic---------------------------------------------------------
+            treetimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (treetimeSinceLastFrame > treemillisecondPerFrame)
+            {
+                treetimeSinceLastFrame -= treemillisecondPerFrame;
+                ++treeCurrentFrame.X;
+
+                if (treeCurrentFrame.X >= treeSheetSize.X)
+                {
+                    treeCurrentFrame.X = 0;
+                    ++treeCurrentFrame.Y;
+
+                    if (treeCurrentFrame.Y >= treeSheetSize.Y)
+                    {
+                        treeCurrentFrame.Y = 0;
+
+                    }
+                }
+            }
+            //end tree--------------------------------------------------------------------------
 
 
             MouseState mouseState = Mouse.GetState();
