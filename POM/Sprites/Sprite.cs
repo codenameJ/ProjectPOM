@@ -17,7 +17,8 @@ namespace POM.Sprites
         public Vector2 Position { get; set; }
         public Vector2 TextureSize { get; set; }
         public Vector2 Direction = new Vector2(720, 450);
-        public Vector2 CurrentPosition = new Vector2(0, 0);
+
+
 
         public Point monsterFramesize { get; set; }
         public Point monsterSheetSize { get; set; }
@@ -34,9 +35,11 @@ namespace POM.Sprites
         
         float Timming = 1f;
 
+        Vector2 CurrentPosition;
 
 
-    public Rectangle Rectangle
+
+        public Rectangle Rectangle
         {
             get
             {
@@ -52,15 +55,15 @@ namespace POM.Sprites
 
         }
 
-        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
 
 
-            spriteBatch.Draw(_texture,CurrentPosition, new Rectangle(
+            spriteBatch.Draw(_texture,Position, new Rectangle(
                             (monsterCurrentFrame.X * monsterFramesize.X),
                             (monsterCurrentFrame.Y * monsterFramesize.Y),
                             monsterFramesize.X,
-                            monsterFramesize.Y), Color.White, 0, new Vector2 (112,100) , 1, SpriteEffects.None, 0);
+                            monsterFramesize.Y), Color.White, 0, Vector2.Zero , 1, SpriteEffects.None, 0);
 
         }
 
@@ -68,11 +71,12 @@ namespace POM.Sprites
         {
 
             //move to direction
-            if (CurrentPosition.X <= Direction.X || CurrentPosition.Y <= Direction.Y)
+
+/*            if (CurrentPosition.X <= Direction.X || CurrentPosition.Y <= Direction.Y)
             {
-                CurrentPosition.X += (Direction.X - CurrentPosition.X)* (Speed * Timming);
-                CurrentPosition.Y += (Direction.Y - CurrentPosition.Y)* (Speed * Timming);
-            }
+                CurrentPosition.X += (Direction.X - Position.X)* (Speed * Timming);
+                CurrentPosition.Y += (Direction.Y - Position.Y)* (Speed * Timming);
+            }*/
 
             //animation logic
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;

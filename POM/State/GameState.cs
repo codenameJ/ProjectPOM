@@ -19,6 +19,7 @@ namespace POM.States
         public static Random Random;
 
         private bool GameOver = false;
+        private SpriteFont _font;
 
         private List<Sprite> _sprites;
 
@@ -85,7 +86,7 @@ namespace POM.States
             gamemoon = _content.Load<Texture2D>("MainMoon");
 
             //prince
-            prince = _content.Load<Texture2D>("Players/o_prince2crop");
+            prince = _content.Load<Texture2D>("Players/o_princenew");
 
             //GameOver
             gameovertext = _content.Load<Texture2D>("t_gameover");
@@ -95,14 +96,15 @@ namespace POM.States
             {
                 new Player(prince)
                 {
-                   Position = new Vector2(100,100),
+                monsterSheetSize = new Point(2,0),
+                monsterFramesize = new Point(202,190),
                 }
             };
 
 
             //monsters part-----------------------------------------------------
             LitMontexture = _content.Load<Texture2D>("Monster/little monster");
-
+            _font = _content.Load<SpriteFont>("fonts/font");
 
 
             var LitMon = new Sprite(LitMontexture)
@@ -137,14 +139,14 @@ namespace POM.States
             {
                 _timer = 0;
 
-                var xPos = Random.Next(0, ScreenWidth);
-                var yPos = Random.Next(0, ScreenHeight);
+                var xPos = Random.Next(0,1440);
+                var yPos = Random.Next(0, 900);
 
                 _sprites.Add(new Sprite(LitMontexture)
                 {
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(115, 78),
-                    Position = new Vector2(xPos, yPos),
+                    Position = new Vector2(xPos, yPos)
                 }); 
             }
         }
@@ -164,6 +166,19 @@ namespace POM.States
 
             if (!GameOver)
             {
+                foreach (var sprite in _sprites)
+                    sprite.Draw(spriteBatch);
+
+                var fontY = 10;
+                var i = 0;
+                foreach (var sprite in _sprites)
+                {
+                    if (sprite is Player)
+
+                        spriteBatch.DrawString(_font, string.Format("Player {0}: {1}", ++i, ((Player)sprite).Score), new Vector2(10, fontY += 20), Color.Red);
+                }
+
+
                 //tree animation part------------------------------------------------------
                 spriteBatch.Draw(tree, new Vector2(620, 350), new Rectangle(
                     (treeCurrentFrame.X * treeFrameSize.X),
@@ -173,8 +188,7 @@ namespace POM.States
                 //--------------------------------------------------------------------------
                         
 
-                foreach (var sprite in _sprites)
-                    sprite.Draw(gameTime, spriteBatch);
+
 
             }
             if(GameOver)
@@ -203,9 +217,7 @@ namespace POM.States
 
             PostUpdate();
 
-            // TODO: Add your update logic here
 
-            //random spawn
 
             SpawnMonster();
 

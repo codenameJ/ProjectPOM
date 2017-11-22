@@ -14,7 +14,6 @@ namespace POM.Sprites
     {
         public int Score;
 
-        Vector2 princePosition = Vector2.Zero;
         MouseState prevMouseState;
 
         public Player(Texture2D texture) : base(texture)
@@ -46,7 +45,7 @@ namespace POM.Sprites
 
             if (mouseState.X != prevMouseState.X || mouseState.Y != prevMouseState.Y)
             {
-                princePosition = new Vector2(mouseState.X, mouseState.Y);
+                Position = new Vector2(mouseState.X, mouseState.Y);
                 prevMouseState = mouseState;
             }
   
