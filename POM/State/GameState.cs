@@ -10,19 +10,27 @@ using POM.Content.Controls;
 //addd
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
+using POM.Sprites;
 
 namespace POM.States
 {
     public class GameState : State
     {
+        public static Random Random;
 
-        private List<Component> _GameComponents;
+        private bool GameOver = false;
+
+        private List<Sprite> _sprites;
 
         Texture2D gamemoon;
         Texture2D prince;
-        Vector2 princePosition = Vector2.Zero;
-        Vector2 hiiPosition = Vector2.Zero;
-        MouseState prevMouseState;
+        Texture2D gameovertext;
+        Texture2D LitMontexture;
+
+        public static int ScreenWidth;
+        public static int ScreenHeight;
+        private float _timer;
+
 
         //add music
         private Song backgroundMusic;
@@ -56,9 +64,12 @@ namespace POM.States
 
 
 
-
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+
+
+            Random = new Random();
+
 
             //add music
             backgroundMusic = _content.Load<Song>("ost/Bat eat Banana");
@@ -70,19 +81,35 @@ namespace POM.States
             //add tree
             tree = _content.Load<Texture2D>("BG/treemars155x300");
 
+            //still content
             gamemoon = _content.Load<Texture2D>("MainMoon");
+
+            //prince
             prince = _content.Load<Texture2D>("Players/o_prince2crop");
+
+            //GameOver
+            gameovertext = _content.Load<Texture2D>("t_gameover");
+
+
+            _sprites = new List<Sprite>()
+            {
+                new Player(prince)
+                {
+                   Position = new Vector2(100,100),
+                }
+            };
 
 
             //monsters part-----------------------------------------------------
-            var LitMontexture = _content.Load<Texture2D>("Monster/little monster");
+            LitMontexture = _content.Load<Texture2D>("Monster/little monster");
+
+
 
             var LitMon = new Sprite(LitMontexture)
             {
-                Position = new Vector2(0,0),
+ //               Position = new Vector2(0,0),
  //               TextureSize = new Vector2(261,254),
-                monsterSheetSize = new Point(3, 0),
-                monsterFramesize = new Point(115, 78),
+
   //              monsterCurrentFrame = new Point(0,0),
  //               timeSinceLastFrame = 0,
   //              millisecondPerFrame = 200
@@ -94,19 +121,32 @@ namespace POM.States
 
             var BigMon = new Sprite(BigMontexture)
             {
-                Position = new Vector2(0, 0),
                 monsterSheetSize = new Point(3, 0),
                 monsterFramesize = new Point(110, 135),
             };
 
-            _GameComponents = new List<Component>()
-            {
-                LitMon, BigMon,
-            };
 
             //end monsters part-------------------------------------------------------------
 
 
+        }
+
+        private void SpawnMonster()
+        {
+            if (_timer > 1)
+            {
+                _timer = 0;
+
+                var xPos = Random.Next(0, ScreenWidth);
+                var yPos = Random.Next(0, ScreenHeight);
+
+                _sprites.Add(new Sprite(LitMontexture)
+                {
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(115, 78),
+                    Position = new Vector2(xPos, yPos),
+                }); 
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -122,22 +162,25 @@ namespace POM.States
                 FrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             //--------------------------------------------------------------------------
 
+            if (!GameOver)
+            {
+                //tree animation part------------------------------------------------------
+                spriteBatch.Draw(tree, new Vector2(620, 350), new Rectangle(
+                    (treeCurrentFrame.X * treeFrameSize.X),
+                    (treeCurrentFrame.Y * treeFrameSize.Y),
+                    treeFrameSize.X,
+                    treeFrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                //--------------------------------------------------------------------------
+                        
 
-            //tree animation part------------------------------------------------------
-            spriteBatch.Draw(tree, new Vector2(620,350), new Rectangle(
-                (treeCurrentFrame.X * treeFrameSize.X),
-                (treeCurrentFrame.Y * treeFrameSize.Y),
-                treeFrameSize.X,
-                treeFrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            //--------------------------------------------------------------------------
+                foreach (var sprite in _sprites)
+                    sprite.Draw(gameTime, spriteBatch);
 
-
-            spriteBatch.Draw(prince, new Rectangle((int)princePosition.X, (int)princePosition.Y, 160, 156), Color.White);
-
-
-            foreach (var component in _GameComponents)
-                component.Draw(gameTime, spriteBatch);
-  
+            }
+            if(GameOver)
+            {
+                spriteBatch.Draw(gameovertext, new Rectangle(300,300,200,100), Color.White);
+            }
 
             spriteBatch.End();
         }
@@ -145,15 +188,26 @@ namespace POM.States
 
         public override void PostUpdate(GameTime gameTime)
         {
-            
+
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var component in _GameComponents)
-                component.Update(gameTime);
 
+            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            foreach (var sprite in _sprites)
+                sprite.Update(gameTime, _sprites);
+
+
+            PostUpdate();
+
+            // TODO: Add your update logic here
+
+            //random spawn
+
+            SpawnMonster();
 
             //BG animation part Logic---------------------------------------------------------
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
@@ -202,11 +256,18 @@ namespace POM.States
             //end tree--------------------------------------------------------------------------
 
 
-            MouseState mouseState = Mouse.GetState();
-            if (mouseState.X != prevMouseState.X || mouseState.Y != prevMouseState.Y)
+
+        }
+
+        private void PostUpdate()
+        {
+            for (int i = 0; i < _sprites.Count; i++)
             {
-                princePosition = new Vector2(mouseState.X, mouseState.Y);
-                prevMouseState = mouseState;
+                if (_sprites[i].IsRemoved)
+                {
+                    _sprites.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }

@@ -6,44 +6,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using POM.Content.Controls;
 
-namespace POM.Content.Controls
+namespace POM.Sprites
 {
-    public class Sprite : Component
+    public class Sprite 
     {
 
         private Texture2D _texture;
         public Vector2 Position { get; set; }
         public Vector2 TextureSize { get; set; }
+        public Vector2 Direction = new Vector2(720, 450);
+        public Vector2 CurrentPosition = new Vector2(0, 0);
 
         public Point monsterFramesize { get; set; }
         public Point monsterSheetSize { get; set; }
+
+        public bool IsRemoved;
 
         Point monsterCurrentFrame = new Point(0,0);
 
         int timeSinceLastFrame = 0;
         int millisecondPerFrame = 200;
 
-        public Vector2 Direction = new Vector2(720, 450);
+        
         public float Speed = 0.01f;
-        public Vector2 CurrentPosition = new Vector2(0, 0);
+        
         float Timming = 1f;
 
 
-        #region monstermove
 
-
-        #endregion
-
-
-        /*        public Rectangle SpriteRect
-                {
-                    get
-                    {
-                        return new Rectangle((int)Position.X, (int)Position.Y, (int)TextureSize.X, (int)TextureSize.Y);
-                    }
-                }
-                */
+    public Rectangle Rectangle
+        {
+            get
+            {
+                return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height);
+            }
+        }
+              
 
         public Sprite(Texture2D texture)
         {
@@ -52,8 +52,9 @@ namespace POM.Content.Controls
 
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
 
             spriteBatch.Draw(_texture,CurrentPosition, new Rectangle(
                             (monsterCurrentFrame.X * monsterFramesize.X),
@@ -63,13 +64,16 @@ namespace POM.Content.Controls
 
         }
 
-        public override void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, List<Sprite> sprites)
         {
+
+            //move to direction
             if (CurrentPosition.X <= Direction.X || CurrentPosition.Y <= Direction.Y)
             {
                 CurrentPosition.X += (Direction.X - CurrentPosition.X)* (Speed * Timming);
                 CurrentPosition.Y += (Direction.Y - CurrentPosition.Y)* (Speed * Timming);
             }
+
             //animation logic
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
 
