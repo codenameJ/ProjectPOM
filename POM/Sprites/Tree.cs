@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using POM.Content.Controls;
+
 
 namespace POM.Sprites
 {
@@ -19,7 +20,7 @@ namespace POM.Sprites
 
         public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
-            /*            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            /*          timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
 
                         if (timeSinceLastFrame > treemillisecondPerFrame)
                         {

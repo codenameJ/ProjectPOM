@@ -47,21 +47,7 @@ namespace POM.Sprites
                         monsterCurrentFrame.Y = 0;
                     }
                 }
-
             }
-
-            foreach (var sprite in sprites)
-                      {
-                                      if (GameOver)
-                              sprite.IsRemoved = true;
-                        /*  if (sprite is Mars)
-                          {
-                              if (sprite.Rectangle.Intersects(this.Rectangle))
-                              {
-                                  sprite.GameOver = true;
-                              }
-                          }*/
-                      }
         }
     }
 }

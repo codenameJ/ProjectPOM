@@ -58,8 +58,6 @@ namespace POM.Sprites
                     Score++;
                     sprite.IsRemoved = true;
                 }
-                if (GameOver)
-                    sprite.IsRemoved = true;
             }
 
         }

@@ -54,12 +54,12 @@ namespace POM.States
 
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            game.IsMouseVisible = false;
 
             Random = new Random();
-
-
+  
             //add music
-            backgroundMusic = _content.Load<Song>("ost/Bat eat Banana");
+            backgroundMusic = _content.Load<Song>("ost/KoisuruFortuneCookie");
             MediaPlayer.Play(backgroundMusic);
 
             //add BG
@@ -68,11 +68,13 @@ namespace POM.States
             //prince
             prince = _content.Load<Texture2D>("Players/o_princenew");
 
+
             //add tree
 //            tree = _content.Load<Texture2D>("BG/treemars155x300");
 
             //add
             Marstext = _content.Load<Texture2D>("BG/mars");
+
 
             //GameOver
            gameovertext = _content.Load<Texture2D>("t_gameover");
@@ -80,12 +82,17 @@ namespace POM.States
 
             _sprites = new List<Sprite>()
             {
+           /*     new Tree(tree)
+                {
+                 monsterSheetSize = new Point(),
+                 monsterFramesize = new Point(),
+                 Position = new Vector2()
+                },*/
                 new Mars(Marstext)
                 {
                 monsterSheetSize = new Point(7, 4),
-                monsterFramesize = new Point(155, 300),
- //               Position = new Vector2(620, 350)
- Position = new Vector2(700,500)
+                monsterFramesize = new Point(157,156),
+                Position = new Vector2(620,500)
                 },
                 new Player(prince)
                 {
@@ -147,18 +154,6 @@ namespace POM.States
         }
 
 
-        private void GameOverr()
-        {
-            // ช่วยแก้ด้วยทำให้มอนสุ่มออกมาคนละเวลา
-            foreach (var Spri in _sprites)
-            if(Spri.GameOver)
-                _sprites.Add(new Over(gameovertext)
-                {
-                    monsterSheetSize = new Point(3, 0),
-                    monsterFramesize = new Point(115, 78),
-                    Position = new Vector2(0,0)
-                });
-        }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -173,8 +168,8 @@ namespace POM.States
                 FrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             //--------------------------------------------------------------------------
 
-                foreach (var sprite in _sprites)
-                    sprite.Draw(spriteBatch);
+                    foreach (var sprite in _sprites)
+                        sprite.Draw(spriteBatch);
 
                     var fontY = 10;
                     var k = 0;
@@ -184,6 +179,13 @@ namespace POM.States
 
                             spriteBatch.DrawString(_font, string.Format("Player {0}: {1}", ++k, ((Player)sprite).Score), new Vector2(10, fontY += 20), Color.Red);
                     }
+
+                foreach (var spr in _sprites)
+                    if (spr.GameOver)
+                {
+                    _game.ChangeState(new OverState(_game, _gtaphicsDevice, _content));
+                }
+
 
                     //                 spriteBatch.Draw(gameovertext, new Rectangle(300, 300, 200, 100), Color.White);
                

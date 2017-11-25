@@ -48,13 +48,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprites\Mars.cs" />
     <Compile Include="Sprites\Monster.cs" />
-    <Compile Include="Sprites\Over.cs" />
     <Compile Include="Sprites\Player.cs" />
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\Tree.cs" />
     <Compile Include="State\GameState.cs" />
     <Compile Include="State\HowtoState.cs" />
     <Compile Include="State\MenuState.cs" />
+    <Compile Include="State\OverState.cs" />
     <Compile Include="State\State.cs" />
   </ItemGroup>
   <ItemGroup>

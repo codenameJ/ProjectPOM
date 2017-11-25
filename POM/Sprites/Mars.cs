@@ -7,6 +7,8 @@ using System.Collections.Concurrent;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using POM.Content.Controls;
+using POM.States;
 
 namespace POM.Sprites
 {
@@ -48,8 +50,8 @@ namespace POM.Sprites
                     {
                         sprite.GameOver = true;
                     }
-                if (GameOver)
-                    sprite.IsRemoved = true;
+
+
 
             }
         }

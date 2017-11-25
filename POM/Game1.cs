@@ -15,7 +15,17 @@ namespace POM
 
 
         private Color _backgroundColour = Color.CornflowerBlue;
+        private bool isMouseVisible;
 
+        private bool GetIsMouseVisible()
+        {
+            return isMouseVisible;
+        }
+
+        private void SetIsMouseVisible(bool value)
+        {
+            isMouseVisible = value;
+        }
 
         private State _currentState;
         private State _nextState;
@@ -24,7 +34,7 @@ namespace POM
             _nextState = state;
             if (_nextState == state)
             {
-                IsMouseVisible = false;
+                SetIsMouseVisible(GetIsMouseVisible());
             }
         }
 
@@ -36,7 +46,7 @@ namespace POM
             graphics.PreferredBackBufferHeight = 900;
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            SetIsMouseVisible(true);
         }
 
         

@@ -16,7 +16,7 @@ namespace POM.Sprites
         private Texture2D _texture;
         public Vector2 Position { get; set; }
         public Vector2 TextureSize { get; set; }
-        public Vector2 Direction = new Vector2(700, 400);
+        public Vector2 Direction = new Vector2(620, 500);
         public Vector2 Distance;
         public Vector2 CurrentPosition;
 
@@ -59,7 +59,6 @@ namespace POM.Sprites
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if (!GameOver)
             {
                 spriteBatch.Draw(_texture, Position, new Rectangle(
                     (monsterCurrentFrame.X * monsterFramesize.X),

@@ -44,7 +44,7 @@ namespace POM.States
 
         public HowtoState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-
+            game.IsMouseVisible = true ;
             //add music
             backgroundMusic = _content.Load<Song>("ost/My Heart Will Go On");
             MediaPlayer.Play(backgroundMusic);
