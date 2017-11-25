@@ -60,6 +60,7 @@ namespace POM.Sprites
                     Score++;
                     sprite.IsRemoved = true;
                 }
+                FinalScore = Score;
             }
 
         }

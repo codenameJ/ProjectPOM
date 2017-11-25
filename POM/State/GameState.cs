@@ -18,23 +18,25 @@ namespace POM.States
     {
         public static Random Random;
 
+       
         private SpriteFont _font;
         private List<Sprite> _sprites;
-
 
         Texture2D Marstext;
         Texture2D prince;
         Texture2D gameovertext;
         Texture2D LitMontexture;
         Texture2D BigMontexture;
+        Texture2D score;
 
         public static int ScreenWidth;
         public static int ScreenHeight;
         private float _timer;
         private float _timer2;
         private float alltime;
-      
 
+        public static int playerScore = 0;
+        public static int HighScore = 417;
         //add music
         private Song backgroundMusic;
 
@@ -56,7 +58,8 @@ namespace POM.States
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             game.IsMouseVisible = false;
-
+            
+           
             Random = new Random();
   
             //add music
@@ -68,6 +71,9 @@ namespace POM.States
 
             //prince
             prince = _content.Load<Texture2D>("Players/o_princenew");
+
+            //score
+            score = _content.Load<Texture2D>("BG/score");
 
 
             //add tree
@@ -94,6 +100,7 @@ namespace POM.States
                 monsterSheetSize = new Point(2,0),
                 monsterFramesize = new Point(202,190),
                 },
+
             };
 
 
@@ -178,6 +185,7 @@ namespace POM.States
             
             spriteBatch.Begin();
 
+
             //BG animetion part--------------------------------------------------------
             spriteBatch.Draw(BG, Vector2.Zero, new Rectangle(
                 (CurrentFrame.X * FrameSize.X),
@@ -186,17 +194,32 @@ namespace POM.States
                 FrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             //--------------------------------------------------------------------------
 
-                    foreach (var sprite in _sprites)
+            if(HighScore > playerScore)
+            {
+                HighScore = HighScore;
+            }
+            if(playerScore > HighScore)
+            {
+                HighScore = playerScore;
+            }
+
+            //draw prince monster mars
+            foreach (var sprite in _sprites)
                         sprite.Draw(spriteBatch);
 
-                    var fontY = 10;
-                    var k = 0;
-                    foreach (var sprite in _sprites)
+            //score box
+            spriteBatch.Draw(score, new Rectangle(30, 30, 120, 100), Color.White);
+
+
+            // draw score font
+            foreach (var sprite in _sprites)
                     {
                         if (sprite is Player)
-
-                            spriteBatch.DrawString(_font, string.Format("Player {0}: {1}", ++k, ((Player)sprite).Score), new Vector2(100, fontY += 200), Color.Red);
-                    }
+                        {
+                         spriteBatch.DrawString(_font, string.Format("{0}", ((Player)sprite).Score), new Vector2(62,73), Color.White);
+                         playerScore = ((Player)sprite).Score;
+                        }
+                   }
 
                 foreach (var spr in _sprites)
                     if (spr.GameOver)
@@ -205,7 +228,10 @@ namespace POM.States
                 }
 
 
-                    //                 spriteBatch.Draw(gameovertext, new Rectangle(300, 300, 200, 100), Color.White);
+
+
+
+                    //spriteBatch.Draw(gameovertext, new Rectangle(300, 300, 200, 100), Color.White);
                
                 spriteBatch.End();
         }
@@ -219,8 +245,7 @@ namespace POM.States
 
         public override void Update(GameTime gameTime)
         {
-
-            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _timer2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
             alltime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 

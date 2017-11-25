@@ -36,9 +36,9 @@ namespace POM.Sprites
         public int timeSinceLastFrame = 0;
         public int millisecondPerFrame = 200;
 
-        
+        public int FinalScore = 0;
+
         public float Speed { get; set; }
-        public Color[] SprData;
 
 
         public Rectangle Rectangle

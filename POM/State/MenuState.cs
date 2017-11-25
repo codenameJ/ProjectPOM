@@ -27,8 +27,9 @@ namespace POM.States
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             game.IsMouseVisible = true;
+
             //add music
-            backgroundMusic = _content.Load<Song>("ost/Earth Cry");
+            backgroundMusic = _content.Load<Song>("ost/ThorRagnarok");
             MediaPlayer.Play(backgroundMusic);
 
             //bgtest
