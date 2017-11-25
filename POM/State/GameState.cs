@@ -82,12 +82,6 @@ namespace POM.States
 
             _sprites = new List<Sprite>()
             {
-           /*     new Tree(tree)
-                {
-                 monsterSheetSize = new Point(),
-                 monsterFramesize = new Point(),
-                 Position = new Vector2()
-                },*/
                 new Mars(Marstext)
                 {
                 monsterSheetSize = new Point(7, 4),
