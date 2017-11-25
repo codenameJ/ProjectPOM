@@ -22,7 +22,6 @@ namespace POM.States
         private List<Sprite> _sprites;
 
 
-        Texture2D tree;
         Texture2D Marstext;
         Texture2D prince;
         Texture2D gameovertext;
@@ -32,7 +31,9 @@ namespace POM.States
         public static int ScreenWidth;
         public static int ScreenHeight;
         private float _timer;
-
+        private float _timer2;
+        private float alltime;
+      
 
         //add music
         private Song backgroundMusic;
@@ -124,23 +125,47 @@ namespace POM.States
 
                 _sprites.Add(new Monster(LitMontexture)
                 {
+                    Speed = ((float)alltime * 0.05f),
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(115, 78),
-                    Position = new Vector2(Random.Next(1500, 2000), Random.Next(1000, 1500))
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
+                });
+                _sprites.Add(new Monster(LitMontexture)
+                {
+                    Speed = ((float)alltime * 0.05f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(115, 78),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
                 });
 
             }
-            if (_timer >1)
+            if (_timer2 > 4)
             {
 
-                _timer = 0;
+                _timer2 = 0;
 
+                _sprites.Add(new Monster(LitMontexture)
+                {
+                    Speed = ((float)alltime * 0.05f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(115, 78),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
+                });
 
                 _sprites.Add(new Monster(BigMontexture)
                 {
+                    Speed = ((float)alltime * 0.04f),
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(110, 135),
-                    Position = new Vector2(Random.Next(1500, 2000), Random.Next(1000, 1500))
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
+                });
+
+                _sprites.Add(new Monster(BigMontexture)
+                {
+                    Speed = ((float)alltime * 0.04f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(110, 135),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
                 });
             }
 
@@ -170,7 +195,7 @@ namespace POM.States
                     {
                         if (sprite is Player)
 
-                            spriteBatch.DrawString(_font, string.Format("Player {0}: {1}", ++k, ((Player)sprite).Score), new Vector2(10, fontY += 20), Color.Red);
+                            spriteBatch.DrawString(_font, string.Format("Player {0}: {1}", ++k, ((Player)sprite).Score), new Vector2(100, fontY += 200), Color.Red);
                     }
 
                 foreach (var spr in _sprites)
@@ -196,6 +221,8 @@ namespace POM.States
         {
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _timer2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            alltime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             foreach (var sprite in _sprites)
                 sprite.Update(gameTime, _sprites);

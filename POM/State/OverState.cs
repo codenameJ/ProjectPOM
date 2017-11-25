@@ -42,6 +42,7 @@ namespace POM.States
             bg = _content.Load<Texture2D>("BG/bgnew");
             over = _content.Load<Texture2D>("t_gameover");
 
+
             //try again butt
             var tryagaintexture = _content.Load<Texture2D>("tryagain");
 
@@ -65,10 +66,15 @@ namespace POM.States
         //again click funtion
         private void Again_Click(object sender, System.EventArgs e)
         {
-            _game.ChangeState(new MenuState(_game, _gtaphicsDevice, _content));
+            _game.ChangeState(new GameState(_game, _gtaphicsDevice, _content));
         }
         //------------------------------------------------------------------------------
 
+        //back to menu
+        private void MainMenu_Click(object sender, System.EventArgs e)
+        {
+            _game.ChangeState(new MenuState(_game, _gtaphicsDevice, _content));
+        }
 
         public override void PostUpdate(GameTime gameTime)
         {

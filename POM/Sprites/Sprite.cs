@@ -37,7 +37,7 @@ namespace POM.Sprites
         public int millisecondPerFrame = 200;
 
         
-        public float Speed = 0.5f;
+        public float Speed { get; set; }
         public Color[] SprData;
 
 
