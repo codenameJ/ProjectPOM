@@ -27,6 +27,8 @@ namespace POM.States
         Texture2D prince;
         Texture2D gameovertext;
         Texture2D LitMontexture;
+        Texture2D BigMontexture;
+        Texture2D tree;
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -50,7 +52,7 @@ namespace POM.States
 
 
         //tree animation part---------------------------------
-        Texture2D tree;
+
 
         Point treeFrameSize = new Point(155, 300);
         Point treeSheetSize = new Point(7, 4);
@@ -61,8 +63,6 @@ namespace POM.States
         int treemillisecondPerFrame = 2000;
 
         //------------------------------------------------------
-
-
 
 
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
@@ -104,25 +104,16 @@ namespace POM.States
 
             //monsters part-----------------------------------------------------
             LitMontexture = _content.Load<Texture2D>("Monster/little monster");
+
             _font = _content.Load<SpriteFont>("fonts/font");
 
 
-            var LitMon = new Sprite(LitMontexture)
-            {
- //               Position = new Vector2(0,0),
- //               TextureSize = new Vector2(261,254),
-
-  //              monsterCurrentFrame = new Point(0,0),
- //               timeSinceLastFrame = 0,
-  //              millisecondPerFrame = 200
-             
-            };
 
             //jeng add------------
-            var BigMontexture = _content.Load<Texture2D>("Monster/bigmonster");
+             BigMontexture = _content.Load<Texture2D>("Monster/bigmonster");
 
             var BigMon = new Sprite(BigMontexture)
-            {
+            {  
                 monsterSheetSize = new Point(3, 0),
                 monsterFramesize = new Point(110, 135),
             };
@@ -135,20 +126,38 @@ namespace POM.States
 
         private void SpawnMonster()
         {
-            if (_timer > 1)
+// ช่วยแก้ด้วยทำให้มอนสุ่มออกมาคนละเวลา
+         
+        if (_timer > 5)
             {
-                _timer = 0;
+                _timer = 3;
 
-                var xPos = Random.Next(0,1440);
-                var yPos = Random.Next(0, 900);
+                //               var xPos = Random.Next(0,1440);
+                //              var yPos = Random.Next(0,900);
 
                 _sprites.Add(new Sprite(LitMontexture)
                 {
+
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(115, 78),
-                    Position = new Vector2(xPos, yPos)
-                }); 
+                    Position = new Vector2(Random.Next(1500, 2000), Random.Next(1000, 1500))
+                });
+
             }
+            if (_timer >1)
+            {
+
+                _timer = 0;
+
+
+                _sprites.Add(new Sprite(BigMontexture)
+                {
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(110, 135),
+                    Position = new Vector2(Random.Next(1500, 2000), Random.Next(1000, 1500))
+                });
+            }
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -167,7 +176,7 @@ namespace POM.States
             if (!GameOver)
             {
                 foreach (var sprite in _sprites)
-                    sprite.Draw(spriteBatch);
+                        sprite.Draw(spriteBatch);
 
                 var fontY = 10;
                 var i = 0;
