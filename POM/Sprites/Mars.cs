@@ -10,28 +10,20 @@ using Microsoft.Xna.Framework.Input;
 
 namespace POM.Sprites
 {
-    public class Player : Sprite
+    public class Mars : Sprite
     {
-        public int Score;
-
-        MouseState prevMouseState;
-
-        public Player(Texture2D texture) : base(texture)
+        public Mars(Texture2D texture) : base(texture)
         {
-
         }
-
 
 
         public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
-            Move();
+/*            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
 
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-
-            if (timeSinceLastFrame > millisecondPerFrame)
+            if (timeSinceLastFrame > treemillisecondPerFrame)
             {
-                timeSinceLastFrame -= millisecondPerFrame;
+                timeSinceLastFrame -= treemillisecondPerFrame;
                 ++monsterCurrentFrame.X;
 
                 if (monsterCurrentFrame.X >= monsterSheetSize.X)
@@ -45,35 +37,21 @@ namespace POM.Sprites
 
                     }
                 }
-            }
-
+            }*/
             foreach (var sprite in sprites)
             {
                 if (sprite is Player)
                     continue;
                 if (sprite is Mars)
                     continue;
-                if (sprite.Rectangle.Intersects(this.Rectangle))
-                {
-                    Score++;
-                    sprite.IsRemoved = true;
-                }
+                    if (sprite.Rectangle.Intersects(this.Rectangle))
+                    {
+                        sprite.GameOver = true;
+                    }
                 if (GameOver)
                     sprite.IsRemoved = true;
+
             }
-
-        }
-
-        private void Move()
-        {
-            MouseState mouseState = Mouse.GetState();
-
-            if (mouseState.X != prevMouseState.X || mouseState.Y != prevMouseState.Y)
-            {
-                Position = new Vector2(mouseState.X, mouseState.Y);
-                prevMouseState = mouseState;
-            }
-  
         }
     }
 }

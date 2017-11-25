@@ -18,26 +18,27 @@ namespace POM.Sprites
         public Vector2 TextureSize { get; set; }
         public Vector2 Direction = new Vector2(700, 400);
         public Vector2 Distance;
-        Vector2 CurrentPosition;
-
+        public Vector2 CurrentPosition;
 
         public Point monsterFramesize { get; set; }
         public Point monsterSheetSize { get; set; }
 
 
+        public int treemillisecondPerFrame = 2000;
+
         public bool IsRemoved;
+        public bool GameOverCheck = false;
+        public bool GameOver = false;
 
-        Point monsterCurrentFrame = new Point(0,0);
-        Point PrinceCurrentFrame = new Point(0, 0);
+        public Point monsterCurrentFrame = new Point(0,0);
+        public Point PrinceCurrentFrame = new Point(0, 0);
 
-        int timeSinceLastFrame = 0;
-        int millisecondPerFrame = 200;
+        public int timeSinceLastFrame = 0;
+        public int millisecondPerFrame = 200;
 
         
         public float Speed = 0.5f;
         
-
-
 
 
         public Rectangle Rectangle
@@ -58,45 +59,18 @@ namespace POM.Sprites
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-         
-            spriteBatch.Draw(_texture, Position, new Rectangle(
-                (monsterCurrentFrame.X * monsterFramesize.X),
-                (monsterCurrentFrame.Y * monsterFramesize.Y),
-                monsterFramesize.X,
-                monsterFramesize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            if (!GameOver)
+            {
+                spriteBatch.Draw(_texture, Position, new Rectangle(
+                    (monsterCurrentFrame.X * monsterFramesize.X),
+                    (monsterCurrentFrame.Y * monsterFramesize.Y),
+                    monsterFramesize.X,
+                    monsterFramesize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            }
         }
 
         public virtual void Update(GameTime gameTime, List<Sprite> sprites)
         {
-            //monster move to Mars
-            Distance.X = Direction.X - Position.X;
-            Distance.Y = Direction.Y - Position.Y;
-            CurrentPosition = new Vector2(Position.X, Position.Y);
-            CurrentPosition.X += (float)Distance.X * (float)Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            CurrentPosition.Y += (float)Distance.Y * (float)Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Position = CurrentPosition;
-
-            //animation logic
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-
-            if (timeSinceLastFrame > millisecondPerFrame)
-            {
-                timeSinceLastFrame -= millisecondPerFrame;
-                ++monsterCurrentFrame.X;
-
-                //monster
-                if (monsterCurrentFrame.X >= monsterSheetSize.X)
-                {
-                    monsterCurrentFrame.X = 0;
-                    ++monsterCurrentFrame.Y;
-
-                    if (monsterCurrentFrame.Y >= monsterSheetSize.Y)
-                    {
-                        monsterCurrentFrame.Y = 0;
-                    }
-                 }
-
-            }
         }
     }
 }

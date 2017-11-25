@@ -18,17 +18,16 @@ namespace POM.States
     {
         public static Random Random;
 
-        private bool GameOver = false;
         private SpriteFont _font;
-
         private List<Sprite> _sprites;
 
-        Texture2D gamemoon;
+
+        Texture2D tree;
+        Texture2D Marstext;
         Texture2D prince;
         Texture2D gameovertext;
         Texture2D LitMontexture;
         Texture2D BigMontexture;
-        Texture2D tree;
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -51,23 +50,10 @@ namespace POM.States
         //----------------------------------------------------
 
 
-        //tree animation part---------------------------------
-
-
-        Point treeFrameSize = new Point(155, 300);
-        Point treeSheetSize = new Point(7, 4);
-        
-        Point treeCurrentFrame = new Point(0, 0);
-
-        int treetimeSinceLastFrame = 0;
-        int treemillisecondPerFrame = 2000;
-
-        //------------------------------------------------------
 
 
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-
 
             Random = new Random();
 
@@ -79,27 +65,36 @@ namespace POM.States
             //add BG
             BG = _content.Load<Texture2D>("BG/bgnew");
 
-            //add tree
-            tree = _content.Load<Texture2D>("BG/treemars155x300");
-
-            //still content
-            gamemoon = _content.Load<Texture2D>("MainMoon");
-
             //prince
             prince = _content.Load<Texture2D>("Players/o_princenew");
 
+            //add tree
+//            tree = _content.Load<Texture2D>("BG/treemars155x300");
+
+            //add
+            Marstext = _content.Load<Texture2D>("BG/mars");
+
             //GameOver
-            gameovertext = _content.Load<Texture2D>("t_gameover");
+           gameovertext = _content.Load<Texture2D>("t_gameover");
 
 
             _sprites = new List<Sprite>()
             {
+                new Mars(Marstext)
+                {
+                monsterSheetSize = new Point(7, 4),
+                monsterFramesize = new Point(155, 300),
+ //               Position = new Vector2(620, 350)
+ Position = new Vector2(700,500)
+                },
                 new Player(prince)
                 {
                 monsterSheetSize = new Point(2,0),
                 monsterFramesize = new Point(202,190),
-                }
+                },
             };
+
+
 
 
             //monsters part-----------------------------------------------------
@@ -111,12 +106,6 @@ namespace POM.States
 
             //jeng add------------
              BigMontexture = _content.Load<Texture2D>("Monster/bigmonster");
-
-            var BigMon = new Sprite(BigMontexture)
-            {  
-                monsterSheetSize = new Point(3, 0),
-                monsterFramesize = new Point(110, 135),
-            };
 
 
             //end monsters part-------------------------------------------------------------
@@ -132,10 +121,7 @@ namespace POM.States
             {
                 _timer = 3;
 
-                //               var xPos = Random.Next(0,1440);
-                //              var yPos = Random.Next(0,900);
-
-                _sprites.Add(new Sprite(LitMontexture)
+                _sprites.Add(new Monster(LitMontexture)
                 {
 
                     monsterSheetSize = new Point(3, 0),
@@ -150,7 +136,7 @@ namespace POM.States
                 _timer = 0;
 
 
-                _sprites.Add(new Sprite(BigMontexture)
+                _sprites.Add(new Monster(BigMontexture)
                 {
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(110, 135),
@@ -160,9 +146,23 @@ namespace POM.States
 
         }
 
+
+        private void GameOverr()
+        {
+            // ช่วยแก้ด้วยทำให้มอนสุ่มออกมาคนละเวลา
+            foreach (var Spri in _sprites)
+            if(Spri.GameOver)
+                _sprites.Add(new Over(gameovertext)
+                {
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(115, 78),
+                    Position = new Vector2(0,0)
+                });
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
+            
             spriteBatch.Begin();
 
             //BG animetion part--------------------------------------------------------
@@ -173,39 +173,21 @@ namespace POM.States
                 FrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             //--------------------------------------------------------------------------
 
-            if (!GameOver)
-            {
                 foreach (var sprite in _sprites)
-                        sprite.Draw(spriteBatch);
+                    sprite.Draw(spriteBatch);
 
-                var fontY = 10;
-                var i = 0;
-                foreach (var sprite in _sprites)
-                {
-                    if (sprite is Player)
+                    var fontY = 10;
+                    var k = 0;
+                    foreach (var sprite in _sprites)
+                    {
+                        if (sprite is Player)
 
-                        spriteBatch.DrawString(_font, string.Format("Player {0}: {1}", ++i, ((Player)sprite).Score), new Vector2(10, fontY += 20), Color.Red);
-                }
+                            spriteBatch.DrawString(_font, string.Format("Player {0}: {1}", ++k, ((Player)sprite).Score), new Vector2(10, fontY += 20), Color.Red);
+                    }
 
-
-                //tree animation part------------------------------------------------------
-                spriteBatch.Draw(tree, new Vector2(620, 350), new Rectangle(
-                    (treeCurrentFrame.X * treeFrameSize.X),
-                    (treeCurrentFrame.Y * treeFrameSize.Y),
-                    treeFrameSize.X,
-                    treeFrameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                //--------------------------------------------------------------------------
-                        
-
-
-
-            }
-            if(GameOver)
-            {
-                spriteBatch.Draw(gameovertext, new Rectangle(300,300,200,100), Color.White);
-            }
-
-            spriteBatch.End();
+                    //                 spriteBatch.Draw(gameovertext, new Rectangle(300, 300, 200, 100), Color.White);
+               
+                spriteBatch.End();
         }
 
 
@@ -226,9 +208,9 @@ namespace POM.States
 
             PostUpdate();
 
-
-
             SpawnMonster();
+
+
 
             //BG animation part Logic---------------------------------------------------------
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
@@ -251,32 +233,6 @@ namespace POM.States
                 }
             }
             //end BG--------------------------------------------------------------------------
-
-
-
-            //tree animation part Logic---------------------------------------------------------
-            treetimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-
-            if (treetimeSinceLastFrame > treemillisecondPerFrame)
-            {
-                treetimeSinceLastFrame -= treemillisecondPerFrame;
-                ++treeCurrentFrame.X;
-
-                if (treeCurrentFrame.X >= treeSheetSize.X)
-                {
-                    treeCurrentFrame.X = 0;
-                    ++treeCurrentFrame.Y;
-
-                    if (treeCurrentFrame.Y >= treeSheetSize.Y)
-                    {
-                        treeCurrentFrame.Y = 0;
-
-                    }
-                }
-            }
-            //end tree--------------------------------------------------------------------------
-
-
 
         }
 
