@@ -38,17 +38,17 @@ namespace POM.Sprites
 
         
         public float Speed = 0.5f;
-        
+        public Color[] SprData;
 
 
         public Rectangle Rectangle
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height);
+                return new Rectangle((int)Position.X, (int)Position.Y, monsterFramesize.X, monsterFramesize.Y);
             }
         }
-              
+
 
         public Sprite(Texture2D texture)
         {

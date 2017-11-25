@@ -73,7 +73,7 @@ namespace POM.States
 //            tree = _content.Load<Texture2D>("BG/treemars155x300");
 
             //add
-            Marstext = _content.Load<Texture2D>("BG/mars");
+            Marstext = _content.Load<Texture2D>("BG/treemars155x300");
 
 
             //GameOver
@@ -91,8 +91,8 @@ namespace POM.States
                 new Mars(Marstext)
                 {
                 monsterSheetSize = new Point(7, 4),
-                monsterFramesize = new Point(157,156),
-                Position = new Vector2(620,500)
+                monsterFramesize = new Point(155,300),
+                Position = new Vector2(620,350),
                 },
                 new Player(prince)
                 {
@@ -130,7 +130,6 @@ namespace POM.States
 
                 _sprites.Add(new Monster(LitMontexture)
                 {
-
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(115, 78),
                     Position = new Vector2(Random.Next(1500, 2000), Random.Next(1000, 1500))

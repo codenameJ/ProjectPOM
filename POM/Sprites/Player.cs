@@ -14,6 +14,7 @@ namespace POM.Sprites
     {
         public int Score;
 
+        public Color[] textureData;
         MouseState prevMouseState;
 
         public Player(Texture2D texture) : base(texture)
@@ -26,6 +27,7 @@ namespace POM.Sprites
         public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
             Move();
+
 
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
 

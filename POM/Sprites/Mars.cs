@@ -21,7 +21,7 @@ namespace POM.Sprites
 
         public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
-/*            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
 
             if (timeSinceLastFrame > treemillisecondPerFrame)
             {
@@ -39,7 +39,7 @@ namespace POM.Sprites
 
                     }
                 }
-            }*/
+            }
             foreach (var sprite in sprites)
             {
                 if (sprite is Player)
