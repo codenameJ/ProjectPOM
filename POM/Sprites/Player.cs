@@ -57,8 +57,15 @@ namespace POM.Sprites
                     continue;
                 if (sprite.Rectangle.Intersects(this.Rectangle))
                 {
-                    Score++;
-                    sprite.IsRemoved = true;
+                    if (sprite is Monster)
+                    {
+                        Score++;
+                        sprite.IsRemoved = true;
+                    }
+                    if(sprite is Item)
+                    {
+                        sprite.IsRemoved = true;
+                    }
                 }
                 FinalScore = Score;
             }

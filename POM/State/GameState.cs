@@ -28,11 +28,13 @@ namespace POM.States
         Texture2D LitMontexture;
         Texture2D BigMontexture;
         Texture2D score;
+        Texture2D Fever;
 
         public static int ScreenWidth;
         public static int ScreenHeight;
         private float _timer;
         private float _timer2;
+        private float _timeritem;
         private float alltime;
 
         public static int playerScore = 0;
@@ -75,7 +77,8 @@ namespace POM.States
             //score
             score = _content.Load<Texture2D>("BG/score");
 
-
+            //add
+            Fever = _content.Load<Texture2D>("Item/fever55x55");
             //add tree
 //            tree = _content.Load<Texture2D>("BG/treemars155x300");
 
@@ -122,13 +125,30 @@ namespace POM.States
 
         }
 
+        private void SpanwItem()
+        {
+            if (_timeritem > 5)
+            {
+                _timeritem = 0;
+
+                _sprites.Add(new Item(Fever)
+                {
+                    Speed = ((float)alltime * 0.05f),
+                    monsterSheetSize = new Point(0, 0),
+                    monsterFramesize = new Point(55, 55),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
+
+                });
+            }
+        }
+
         private void SpawnMonster()
         {
 // ช่วยแก้ด้วยทำให้มอนสุ่มออกมาคนละเวลา
          
-        if (_timer > 5)
+        if (_timer > 1)
             {
-                _timer = 3;
+                _timer = 0;
 
                 _sprites.Add(new Monster(LitMontexture)
                 {
@@ -146,7 +166,7 @@ namespace POM.States
                 });
 
             }
-            if (_timer2 > 4)
+            if (_timer2 > 3)
             {
 
                 _timer2 = 0;
@@ -248,6 +268,7 @@ namespace POM.States
                 _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _timer2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
             alltime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _timeritem += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             foreach (var sprite in _sprites)
                 sprite.Update(gameTime, _sprites);
@@ -257,7 +278,7 @@ namespace POM.States
 
             SpawnMonster();
 
-
+            SpanwItem();
 
             //BG animation part Logic---------------------------------------------------------
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
