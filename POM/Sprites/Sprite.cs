@@ -45,7 +45,7 @@ namespace POM.Sprites
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, monsterFramesize.X, monsterFramesize.Y);
+                return new Rectangle((int)Position.X, (int)Position.Y, monsterFramesize.X*3/5, monsterFramesize.Y*3/5);
             }
         }
 
