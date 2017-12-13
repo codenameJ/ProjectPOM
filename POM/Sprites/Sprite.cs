@@ -12,7 +12,7 @@ namespace POM.Sprites
 {
     public class Sprite 
     {
-
+        //edit item
         private Texture2D _texture;
         public Vector2 Position { get; set; }
         public Vector2 TextureSize { get; set; }
