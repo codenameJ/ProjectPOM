@@ -127,7 +127,7 @@ namespace POM.States
 
         private void SpanwItem()
         {
-            if (_timeritem > 5)
+            if (_timeritem > 15)
             {
                 _timeritem = 0;
 
@@ -136,7 +136,7 @@ namespace POM.States
                     Speed = ((float)alltime * 0.05f),
                     monsterSheetSize = new Point(0, 0),
                     monsterFramesize = new Point(55, 55),
-                    Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
+                    Position = new Vector2(Random.Next(600,800), Random.Next(300, 500))
 
                 });
             }

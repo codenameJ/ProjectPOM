@@ -19,10 +19,10 @@ namespace POM.Sprites
         public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
 
-            Distance.X = Direction.X - Position.X;
+       //     Distance.X = Direction.X - Position.X;
             Distance.Y = Direction.Y - Position.Y;
             CurrentPosition = new Vector2(Position.X, Position.Y);
-            CurrentPosition.X += (float)Distance.X * (float)Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+      //      CurrentPosition.X += (float)Distance.X * (float)Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             CurrentPosition.Y += (float)Distance.Y * (float)Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Position = CurrentPosition;
 
@@ -48,15 +48,10 @@ namespace POM.Sprites
 
             foreach (var sprite in sprites)
             {
-                if (sprite is Monster)
+                if (sprite is Mars)
                     continue;
-                if (sprite.Rectangle.Intersects(this.Rectangle))
-                {
-                    if (sprite is Player)
-                    {
-                    }
                 }
             }
         }
     }
-}
+

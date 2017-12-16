@@ -46,7 +46,7 @@ namespace POM.States
         {
             game.IsMouseVisible = true ;
             //add music
-            backgroundMusic = _content.Load<Song>("ost/My Heart Will Go On");
+            backgroundMusic = _content.Load<Song>("ost/Bat eat Banana");
             MediaPlayer.Play(backgroundMusic);
 
             //bgtest

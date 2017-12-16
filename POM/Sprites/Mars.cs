@@ -35,7 +35,7 @@ namespace POM.Sprites
 
                     if (monsterCurrentFrame.Y >= monsterSheetSize.Y)
                     {
-                        monsterCurrentFrame.Y = 0;
+                        monsterCurrentFrame.Y -= 1;
 
                     }
                 }
@@ -46,11 +46,11 @@ namespace POM.Sprites
                     continue;
                 if (sprite is Mars)
                     continue;
-                    if (sprite.Rectangle.Intersects(this.Rectangle))
-                    {
-                        sprite.GameOver = true;
-                    if (sprite is Item)
-                        sprite.IsRemoved = true;
+                if (sprite is Item)
+                    continue;
+                if (sprite.Rectangle.Intersects(this.Rectangle))
+                {
+                    sprite.GameOver = true;
                 }
 
 
