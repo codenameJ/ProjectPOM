@@ -27,6 +27,7 @@ namespace POM.States
         Texture2D gameovertext;
         Texture2D LitMontexture;
         Texture2D BigMontexture;
+        Texture2D PeeMontexture;
         Texture2D score;
         Texture2D Fever;
 
@@ -34,6 +35,8 @@ namespace POM.States
         public static int ScreenHeight;
         private float _timer;
         private float _timer2;
+        private float _timer3;
+        private float _timer4;
         private float _timeritem;
         private float alltime;
 
@@ -72,7 +75,7 @@ namespace POM.States
             BG = _content.Load<Texture2D>("BG/bgnew");
 
             //prince
-            prince = _content.Load<Texture2D>("Players/o_princenew");
+            prince = _content.Load<Texture2D>("Players/prince149x140");
 
             //score
             score = _content.Load<Texture2D>("BG/score");
@@ -101,7 +104,7 @@ namespace POM.States
                 new Player(prince)
                 {
                 monsterSheetSize = new Point(2,0),
-                monsterFramesize = new Point(202,190),
+                monsterFramesize = new Point(149,140),
                 },
 
             };
@@ -111,6 +114,8 @@ namespace POM.States
 
             //monsters part-----------------------------------------------------
             LitMontexture = _content.Load<Texture2D>("Monster/little monster");
+
+            PeeMontexture = _content.Load<Texture2D>("Monster/PeeMonster");
 
             _font = _content.Load<SpriteFont>("fonts/font");
 
@@ -157,13 +162,22 @@ namespace POM.States
                     monsterFramesize = new Point(115, 78),
                     Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
                 });
+
                 _sprites.Add(new Monster(LitMontexture)
                 {
-                    Speed = ((float)alltime * 0.05f),
+                    Speed = ((float)alltime * 0.01f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(115, 78),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
+                });
+                _sprites.Add(new Monster(LitMontexture)
+                {
+                    Speed = ((float)alltime * 0.01f),
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(115, 78),
                     Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
                 });
+
 
             }
             if (_timer2 > 3)
@@ -181,7 +195,30 @@ namespace POM.States
 
                 _sprites.Add(new Monster(BigMontexture)
                 {
-                    Speed = ((float)alltime * 0.04f),
+                    Speed = ((float)alltime * 0.05f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(110, 135),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
+                });
+
+                _sprites.Add(new Monster(PeeMontexture)
+                {
+                    Speed = ((float)alltime * 0.07f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(110, 110),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
+                });
+
+
+            }
+            if (_timer3 > 5)
+            {
+
+                _timer3 = 0;
+
+                _sprites.Add(new Monster(BigMontexture)
+                {
+                    Speed = ((float)alltime * 0.05f),
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(110, 135),
                     Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
@@ -189,9 +226,32 @@ namespace POM.States
 
                 _sprites.Add(new Monster(BigMontexture)
                 {
-                    Speed = ((float)alltime * 0.04f),
+                    Speed = ((float)alltime * 0.05f),
                     monsterSheetSize = new Point(3, 0),
                     monsterFramesize = new Point(110, 135),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(-100, 0))
+                });
+           
+
+                _sprites.Add(new Monster(PeeMontexture)
+                {
+                    Speed = ((float)alltime * 0.05f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(110, 110),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
+                });
+                _sprites.Add(new Monster(PeeMontexture)
+                {
+                    Speed = ((float)alltime * 0.07f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(110, 110),
+                    Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
+                });
+                _sprites.Add(new Monster(PeeMontexture)
+                {
+                    Speed = ((float)alltime * 0.07f),
+                    monsterSheetSize = new Point(3, 0),
+                    monsterFramesize = new Point(110, 110),
                     Position = new Vector2(Random.Next(0, 2000), Random.Next(900, 1000))
                 });
             }

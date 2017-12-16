@@ -29,7 +29,7 @@ namespace POM.States
             game.IsMouseVisible = true;
 
             //add music
-            backgroundMusic = _content.Load<Song>("ost/ThorRagnarok");
+            backgroundMusic = _content.Load<Song>("ost/Come Together");
             MediaPlayer.Play(backgroundMusic);
 
             //bgtest

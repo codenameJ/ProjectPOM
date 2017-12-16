@@ -50,7 +50,9 @@ namespace POM.Sprites
             {
                 if (sprite is Mars)
                     continue;
-                }
+                 
+            }
+
             }
         }
     }

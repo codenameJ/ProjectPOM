@@ -64,6 +64,7 @@ namespace POM.Sprites
                     }
                     if(sprite is Item)
                     {
+                        Score += 10;
                         sprite.IsRemoved = true;
                     }
                 }
